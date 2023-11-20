@@ -1,25 +1,25 @@
 #include <iostream>
-#include <fstream>
-#include <string>
-#include <cstdlib>
-#include <ctime>
-#include <algorithm>
-#include <chrono>
-#include <random>
+#include <fstream>    
+#include <string>     
+#include <cstdlib>    
+#include <ctime>      
+#include <algorithm>  
+#include <random>    
 
 using namespace std;
 
 const int NUM_EQUIPOS = 48;
 const int NUM_ESTADIOS = 20;
 
+// Función que simula un partido y devuelve la cantidad de goles del equipo ganador
 int simularPartido() {
-    
     int golesEquipo1 = rand() % 5 + 1;  // Números aleatorios de 1 a 5
     int golesEquipo2 = rand() % 5 + 1;
 
     return max(golesEquipo1, golesEquipo2);
 }
 
+// Función que lee nombres de estadios desde un archivo y los almacena en un arreglo
 void obtenerNombresEstadios(string nombresEstadios[]) {
     ifstream archivo("estadios.txt");
 
@@ -35,6 +35,7 @@ void obtenerNombresEstadios(string nombresEstadios[]) {
     archivo.close();
 }
 
+// Función que muestra los resultados de los partidos entre equipos aleatorios
 void mostrarResultados(string equipos[], int numEquipos, string nombresEstadios[]) {
     for (int i = 0; i < numEquipos; i += 2) {
         int golesEquipo1, golesEquipo2;
@@ -49,11 +50,12 @@ void mostrarResultados(string equipos[], int numEquipos, string nombresEstadios[
         // Selecciona aleatoriamente los índices de los equipos que participan en el partido
         int indiceEquipo1 = rand() % numEquipos;
         int indiceEquipo2;
-        
+
         do {
             indiceEquipo2 = rand() % numEquipos;
         } while (indiceEquipo2 == indiceEquipo1);
 
+        // Muestra el resultado del partido y el equipo ganador
         cout << equipos[indiceEquipo1] << " " << golesEquipo1 << " - " << equipos[indiceEquipo2] << " " << golesEquipo2 << " en el Estadio: " << nombresEstadios[indiceEstadio] << endl;
 
         if (golesEquipo1 > golesEquipo2) {
@@ -66,6 +68,7 @@ void mostrarResultados(string equipos[], int numEquipos, string nombresEstadios[
     }
 }
 
+// Función que muestra un mensaje de bienvenida al inicio del programa
 void mostrarMensajeBienvenida() {
     cout << "************************************************************************" << endl;
     cout << "*             Bienvenido a la Gran Simulacion Mundial 2023             *" << endl;
@@ -75,14 +78,13 @@ void mostrarMensajeBienvenida() {
     cout << endl;
 }
 
+// Función que muestra una introducción al inicio del programa
 void mostrarIntroduccion() {
     cout << "Bienvenido a esta emocionante simulaciin del Mundial 2023!" << endl;
     cout << "En esta simulacion, experimentaras la emociin de los partidos de futbol," << endl;
     cout << "desde la fase de grupos hasta la gran final. Estas listo para empezar a jugar?" << endl;
     cout << endl;
 }
-
-
 
 int main() {
     mostrarMensajeBienvenida();
@@ -91,7 +93,7 @@ int main() {
     int opcion;
 
     do {
-        // Opciones del usuario
+        // Menú de opciones para el usuario
         cout << "1. Mostrar Equipos" << endl;
         cout << "2. Empezar a Jugar" << endl;
         cout << "3. Salir" << endl;
@@ -104,6 +106,7 @@ int main() {
         // Procesar la elección del usuario
         switch (opcion) {
             case 1: {
+                // Mostrar equipos y grupos del Mundial
                 string equipos[NUM_EQUIPOS];
                 ifstream archivoEquipos("NombreEquipos.txt");
 
@@ -111,7 +114,7 @@ int main() {
                     cerr << "Error al abrir el archivo de equipos" << endl;
                     return 1;
                 }
-                
+
                 cout << "-------- Grupos Del Mundial --------" << endl << endl;
 
                 for (int i = 0; i < NUM_EQUIPOS; ++i) {
@@ -120,7 +123,8 @@ int main() {
                 }
 
                 archivoEquipos.close();
-                
+
+                // Barajar aleatoriamente los equipos
                 random_shuffle(equipos, equipos + NUM_EQUIPOS);
 
                 cout << endl << "Presiona Enter para volver al menu principal -->" << endl;
@@ -130,6 +134,7 @@ int main() {
                 break;
             }
             case 2: {
+                // Simulación de los partidos del Mundial
                 string equipos[NUM_EQUIPOS];
                 string nombresEstadios[NUM_ESTADIOS];
 
